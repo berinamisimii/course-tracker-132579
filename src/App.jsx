@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import './App.css'
 import StudentCard from './components/StudentCard'
 import RegisterCourse from './components/RegisterCourse'
@@ -33,14 +33,17 @@ const initialCourses = [
 function App() {
   const [courses, setCourses] = useState(initialCourses)
 
-  function handleAddCourse(newCourse) {
-    const nextId =
-        courses.length > 0
-            ? Math.max(...courses.map((course) => course.id)) + 1
-            : 1
+  const handleAddCourse = useCallback((newCourse) => {
+    setCourses((prevCourses) => {
+      // I calculate the next id from the current list so it stays correct even after new courses are added.
+      const nextId =
+          prevCourses.length > 0
+              ? Math.max(...prevCourses.map((course) => course.id)) + 1
+              : 1
 
-    setCourses([...courses, { ...newCourse, id: nextId }])
-  }
+      return [...prevCourses, { ...newCourse, id: nextId }]
+    })
+  }, [])
 
   return (
       <div className="app">

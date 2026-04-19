@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const initialForm = {
     name: '',
@@ -11,6 +11,7 @@ const initialForm = {
 function RegisterCourse({ onRegister }) {
     const [formData, setFormData] = useState(initialForm)
     const [error, setError] = useState('')
+    const courseNameRef = useRef(null)
 
     function handleChange(e) {
         const { name, value, type, checked } = e.target
@@ -26,6 +27,7 @@ function RegisterCourse({ onRegister }) {
 
         if (formData.name.trim() === '') {
             setError('course name is required.')
+            courseNameRef.current.focus()
             return
         }
 
@@ -47,6 +49,7 @@ function RegisterCourse({ onRegister }) {
         })
 
         setFormData(initialForm)
+        courseNameRef.current.focus()
     }
 
     return (
@@ -54,6 +57,7 @@ function RegisterCourse({ onRegister }) {
             <h2>Register New Course</h2>
 
             <input
+                ref={courseNameRef}
                 type="text"
                 name="name"
                 placeholder="Course name"
