@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import './App.css'
 import StudentCard from './components/StudentCard'
+import RegisterCourse from './components/RegisterCourse'
 
-const courses = [
+const initialCourses = [
   {
     id: 1,
     name: 'Client Side Programming',
@@ -29,6 +31,17 @@ const courses = [
 ]
 
 function App() {
+  const [courses, setCourses] = useState(initialCourses)
+
+  function handleAddCourse(newCourse) {
+    const nextId =
+        courses.length > 0
+            ? Math.max(...courses.map((course) => course.id)) + 1
+            : 1
+
+    setCourses([...courses, { ...newCourse, id: nextId }])
+  }
+
   return (
       <div className="app">
         <h1>Berina Misimi</h1>
@@ -38,6 +51,8 @@ function App() {
         {courses.map((course) => (
             <StudentCard key={course.id} course={course} />
         ))}
+
+        <RegisterCourse onRegister={handleAddCourse} />
       </div>
   )
 }
