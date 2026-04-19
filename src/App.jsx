@@ -1,4 +1,5 @@
 import './App.css'
+import StudentCard from './components/StudentCard'
 
 const courses = [
   {
@@ -35,13 +36,7 @@ function App() {
         <p>The courses below are my enrolled courses for this semester.</p>
 
         {courses.map((course) => (
-            <div key={course.id}>
-              <h3>{course.name}</h3>
-              <p>Credits: {course.credits}</p>
-              <p>Grade: {course.grade}</p>
-              <p>Attending: {course.attending ? 'Yes' : 'No'}</p>
-              <p>Difficulty: {course.difficulty}</p>
-            </div>
+            <StudentCard key={course.id} course={course} />
         ))}
       </div>
   )
